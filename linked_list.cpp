@@ -41,6 +41,33 @@ void print(Node*head){
     cout<<endl;
 }
 
+
+Node* insert_at_pos(Node*&head,int data,int pos){
+    if(head==NULL){
+        return NULL;
+    }
+
+    if(pos==0){
+        Node*temp=new Node(data);
+        temp->next=head;
+        head=temp;
+        return head;
+    }
+
+    else if(pos==1){
+        Node*temp=new Node(data);
+        temp->next=head->next;
+        head->next=temp;
+        return head;
+    }
+
+    else{
+        Node*newNode=insert_at_pos(head->next,data,pos-1);
+        head->next=newNode;
+    }
+}
+
+
 int main(){
 
     Node*head=NULL;
@@ -60,11 +87,22 @@ int main(){
         else{
             Node*temp=new Node(data);
             tail->next=temp;
-            tail=tail->next;
+            tail=temp;
         }
         i++;
     }
     cout<<"Linked list created"<<endl;
     print(head);
+
+    cout<<endl;
+
+    int pos;
+    cin>>pos;
+    int data;
+    cin>>data;
+    insert_at_pos(head,data,pos);
+
+    print(head);
+
     return 0;
 }
